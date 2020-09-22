@@ -1,4 +1,5 @@
 import { RunService } from "@rbxts/services";
+import { ListDisplayController } from "ui/controllers/ListDisplayController";
 import { LocalizedStringsManager } from "./LocalizedStringsManager";
 
 export class MainWindowManager {
@@ -7,6 +8,7 @@ export class MainWindowManager {
 	private readonly pluginToolbarButton: PluginToolbarButton;
 
 	private constructor(
+		private readonly listDisplayController: ListDisplayController,
 		private readonly localizedStringsManager: LocalizedStringsManager,
 		pluginReference: Plugin,
 		pluginToolbar: PluginToolbar,
@@ -19,10 +21,10 @@ export class MainWindowManager {
 				Enum.InitialDockState.Left, // initDockState
 				false, // initEnabled
 				false, // overrideEnabledRestore
-				128, // floatXSize
-				256, // floatYSize
-				128, // minWidth
-				256, // minHeight
+				200, // floatXSize
+				360, // floatYSize
+				200, // minWidth
+				200, // minHeight
 			),
 		);
 		this.pluginToolbarButton = pluginToolbar.CreateButton(
@@ -33,12 +35,15 @@ export class MainWindowManager {
 
 		this.containerFrame.Parent = this.dockWidgetPluginGui;
 
+		this.dockWidgetPluginGui.Name = "EventLog_MainWindow";
 		this.dockWidgetPluginGui.Title = this.localizedStringsManager.GetLocalizedString("BaseMainWindowTitle", {});
 
 		this.pluginToolbarButton.Enabled = this.runService.IsRunning();
 
 		this.handleActiveStateOfPluginToolbarButton();
 		this.listenToPluginToolbarButtonClicks();
+
+		this.showListDisplay();
 	}
 
 	public static create(
@@ -47,7 +52,13 @@ export class MainWindowManager {
 		pluginReference: Plugin,
 		pluginToolbar: PluginToolbar,
 	) {
-		return new MainWindowManager(localizedStringsManager, pluginReference, pluginToolbar, RunService);
+		return new MainWindowManager(
+			ListDisplayController.create(localizedStringsManager),
+			localizedStringsManager,
+			pluginReference,
+			pluginToolbar,
+			RunService,
+		);
 	}
 
 	private handleActiveStateOfPluginToolbarButton() {
@@ -66,5 +77,9 @@ export class MainWindowManager {
 		this.pluginToolbarButton.Click.Connect(() => {
 			this.dockWidgetPluginGui.Enabled = true;
 		});
+	}
+
+	private showListDisplay() {
+		this.listDisplayController.show(this.dockWidgetPluginGui);
 	}
 }

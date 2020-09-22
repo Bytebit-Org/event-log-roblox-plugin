@@ -54,6 +54,16 @@ export class EventListener implements IDestroyable {
 				}
 			}
 
+			this.dumpster.dump(
+				root.DescendantAdded.Connect((descendant) => {
+					if (safeIsA(descendant, "BindableEvent")) {
+						this.listenToBindableEvent(descendant);
+					} else if (safeIsA(descendant, "RemoteEvent")) {
+						this.listenToRemoteEvent(descendant);
+					}
+				}),
+			);
+
 			const descendants = root.GetDescendants();
 			for (const descendant of descendants) {
 				if (safeIsA(descendant, "BindableEvent")) {

@@ -1,4 +1,3 @@
-import { DoublyLinkedList, ReadonlyDoublyLinkedList } from "@rbxts/basic-utilities";
 import { Dumpster } from "@rbxts/dumpster";
 import { ISignal } from "@rbxts/signals-tooling";
 import { DumpsterFactory } from "factories/DumpsterFactory";
@@ -9,20 +8,18 @@ import { EventLog } from "types/EventLog";
 export class EventLogStore implements IEventLogStore {
 	public readonly eventLogAdded: ISignal<(eventLog: EventLog) => void>;
 
-	private readonly allEventLogs: DoublyLinkedList<EventLog>;
+	private readonly allEventLogs: Array<EventLog>;
 	private readonly dumpster: Dumpster;
 	private isDestroyed: boolean;
 
 	private constructor(dumpsterFactory: DumpsterFactory, signalFactory: SignalFactory) {
 		this.eventLogAdded = signalFactory.createInstance();
 
-		this.allEventLogs = new DoublyLinkedList();
+		this.allEventLogs = [];
 		this.dumpster = dumpsterFactory.createInstance();
 		this.isDestroyed = false;
 
 		this.dumpster.dump(this.eventLogAdded);
-
-		this.dumpster.dump({}, () => this.allEventLogs.clear());
 	}
 
 	public static create(this: void): IEventLogStore {
@@ -39,7 +36,7 @@ export class EventLogStore implements IEventLogStore {
 		this.isDestroyed = true;
 	}
 
-	public getEventLogs(): ReadonlyDoublyLinkedList<EventLog> {
+	public getEventLogs(): ReadonlyArray<EventLog> {
 		if (this.isDestroyed) {
 			throw `Attempt to call a method on a destroyed instance of type ${getmetatable(this)}`;
 		}
@@ -52,7 +49,7 @@ export class EventLogStore implements IEventLogStore {
 			throw `Attempt to call a method on a destroyed instance of type ${getmetatable(this)}`;
 		}
 
-		this.allEventLogs.pushToTail(eventLog);
+		this.allEventLogs.push(eventLog);
 
 		this.eventLogAdded.fire(eventLog);
 	}
