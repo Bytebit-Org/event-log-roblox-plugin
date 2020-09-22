@@ -4,7 +4,7 @@
   "description": "A Roblox Studio Plugin for monitoring all RemoteEvents and BindableEvents in the data model.",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "macbuild": "rbxtsc-dev && rojo build -o ~/Documents/Roblox/Plugins/event-log-plugin.rbxm"
   },
   "repository": {
     "type": "git",
