@@ -16,10 +16,12 @@ export class ListDisplayController {
 		private readonly eventLogStoreFactory: EventLogStoreFactory,
 		private readonly eventListenerFactory: EventListenerFactory,
 		private readonly localizedStringsManager: LocalizedStringsManager,
+		private readonly studioSettings: Studio,
 	) {
 		this.currentEventLogStore = this.eventLogStoreFactory.createInstance();
 
 		this.listenForNewEventLogsInStore();
+		this.listenForStudioThemeChanges();
 	}
 
 	public static create(this: void, localizedStringsManager: LocalizedStringsManager) {
@@ -27,6 +29,7 @@ export class ListDisplayController {
 			new EventLogStoreFactory(),
 			new EventListenerFactory(),
 			localizedStringsManager,
+			settings().Studio,
 		);
 	}
 
@@ -71,6 +74,10 @@ export class ListDisplayController {
 		this.eventLogAddedConnection?.Disconnect();
 
 		this.eventLogAddedConnection = this.currentEventLogStore.eventLogAdded.Connect(() => this.updateIfShowing());
+	}
+
+	private listenForStudioThemeChanges() {
+		this.studioSettings.ThemeChanged.Connect(() => this.updateIfShowing());
 	}
 
 	private updateIfShowing() {

@@ -11,7 +11,7 @@ type Props = {
 	OnActivated: () => void;
 };
 
-export class ListButton extends Roact.Component<Readonly<Props>, IStudioComponentState> {
+export class ListItemExpansionToggleButton extends Roact.Component<Readonly<Props>, IStudioComponentState> {
 	public render() {
 		const props = this.props;
 
@@ -24,7 +24,7 @@ export class ListButton extends Roact.Component<Readonly<Props>, IStudioComponen
 			this.state,
 		);
 
-		const isBindableEvent = props.EventLog.FiringEnvironment.type === props.EventLog.ListeningEnvironment.type;
+		const isBindableEvent = props.EventLog.SourceEnvironment.type === props.EventLog.TargetEnvironment.type;
 		const sprite = isBindableEvent ? Spritesheet.sprites.bindableEventIcon : Spritesheet.sprites.remoteEventIcon;
 
 		return (
@@ -89,11 +89,30 @@ export class ListButton extends Roact.Component<Readonly<Props>, IStudioComponen
 					BorderSizePixel={0}
 					Font={Enum.Font.SourceSans}
 					Position={new UDim2(0, 18, 0.5, 0)}
-					Size={new UDim2(1, -36, 1, 0)}
+					Size={new UDim2(1, -80, 1, 0)}
 					Text={props.EventLog.EventInstanceName}
 					TextColor3={theme.GetColor(Enum.StudioStyleGuideColor.ButtonText, styleGuideModifier)}
 					TextSize={16}
+					TextTruncate={Enum.TextTruncate.AtEnd}
 					TextXAlignment={Enum.TextXAlignment.Left}
+					TextYAlignment={Enum.TextYAlignment.Center}
+				/>
+				<textlabel
+					Key="TimestampLabel"
+					Active={false}
+					AnchorPoint={new Vector2(1, 0.5)}
+					BackgroundTransparency={1}
+					BorderSizePixel={0}
+					Font={Enum.Font.SourceSans}
+					Position={new UDim2(1, -2, 0.5, 0)}
+					Size={new UDim2(0, 60, 1, 0)}
+					Text={DateTime.fromUnixTimestampMillis(props.EventLog.UnixTimestampMillis).FormatLocalTime(
+						"HH:mm:ss.SSS",
+						game.GetService("StudioService").StudioLocaleId,
+					)}
+					TextColor3={theme.GetColor(Enum.StudioStyleGuideColor.DimmedText, styleGuideModifier)}
+					TextSize={12}
+					TextXAlignment={Enum.TextXAlignment.Right}
 					TextYAlignment={Enum.TextYAlignment.Center}
 				/>
 			</textbutton>

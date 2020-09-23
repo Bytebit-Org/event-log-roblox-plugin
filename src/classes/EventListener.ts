@@ -10,7 +10,7 @@ function getAncestorNames(instance: Instance) {
 	const ancestorNamesStack = new DoublyLinkedList<string>();
 
 	let currentInstance = instance.Parent;
-	while (currentInstance !== undefined) {
+	while (currentInstance !== undefined && currentInstance !== game) {
 		ancestorNamesStack.pushToHead(currentInstance.Name);
 		currentInstance = currentInstance.Parent;
 	}
@@ -109,9 +109,9 @@ export class EventListener implements IDestroyable {
 					Arguments: args,
 					EventInstanceAncestorNames: ancestorNames,
 					EventInstanceName: bindableEvent.Name,
-					FiringEnvironment: eventEnvironment,
-					ListeningEnvironment: eventEnvironment,
-					UnixTimestamp: DateTime.now().UnixTimestamp,
+					SourceEnvironment: eventEnvironment,
+					TargetEnvironment: eventEnvironment,
+					UnixTimestampMillis: DateTime.now().UnixTimestampMillis,
 				});
 			}),
 		);
@@ -130,14 +130,14 @@ export class EventListener implements IDestroyable {
 						Arguments: args,
 						EventInstanceAncestorNames: ancestorNames,
 						EventInstanceName: remoteEvent.Name,
-						FiringEnvironment: {
+						SourceEnvironment: {
 							type: EventEnvironmentType.Server,
 						},
-						ListeningEnvironment: {
+						TargetEnvironment: {
 							type: EventEnvironmentType.Client,
 							player: localPlayer,
 						},
-						UnixTimestamp: DateTime.now().UnixTimestamp,
+						UnixTimestampMillis: DateTime.now().UnixTimestampMillis,
 					});
 				}),
 			);
@@ -150,14 +150,14 @@ export class EventListener implements IDestroyable {
 						Arguments: args,
 						EventInstanceAncestorNames: ancestorNames,
 						EventInstanceName: remoteEvent.Name,
-						FiringEnvironment: {
+						SourceEnvironment: {
 							type: EventEnvironmentType.Client,
 							player: player,
 						},
-						ListeningEnvironment: {
+						TargetEnvironment: {
 							type: EventEnvironmentType.Server,
 						},
-						UnixTimestamp: DateTime.now().UnixTimestamp,
+						UnixTimestampMillis: DateTime.now().UnixTimestampMillis,
 					});
 				}),
 			);

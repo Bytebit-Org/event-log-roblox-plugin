@@ -2,3 +2,9 @@ Key,Context,Example,Source
 PluginToolbarText,,,Event Log
 MainToolbarButtonText,,,Event Log
 BaseMainWindowTitle,,,Event Log
+AncestryLabel,,,Ancestry
+SourceEnvironmentLabel,,,Source Env
+TargetEnvironmentLabel,,,Target Env
+ArgumentsSectionLabel,,,Arguments
+ArgumentTypeHeader,,,Type
+ArgumentValueHeader,,,Value

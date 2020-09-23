@@ -4,7 +4,7 @@ export type EventLog = Readonly<{
 	Arguments: ReadonlyArray<unknown>;
 	EventInstanceAncestorNames: ReadonlyArray<string>;
 	EventInstanceName: string;
-	FiringEnvironment: EventEnvironment;
-	ListeningEnvironment: EventEnvironment;
-	UnixTimestamp: number;
+	SourceEnvironment: EventEnvironment;
+	TargetEnvironment: EventEnvironment;
+	UnixTimestampMillis: number;
 }>;

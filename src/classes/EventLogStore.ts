@@ -8,7 +8,7 @@ import { EventLog } from "types/EventLog";
 export class EventLogStore implements IEventLogStore {
 	public readonly eventLogAdded: ISignal<(eventLog: EventLog) => void>;
 
-	private readonly allEventLogs: Array<EventLog>;
+	private allEventLogs: Array<EventLog>;
 	private readonly dumpster: Dumpster;
 	private isDestroyed: boolean;
 
@@ -34,6 +34,14 @@ export class EventLogStore implements IEventLogStore {
 
 		this.dumpster.burn();
 		this.isDestroyed = true;
+	}
+
+	public clear() {
+		if (this.isDestroyed) {
+			throw `Attempt to call a method on a destroyed instance of type ${getmetatable(this)}`;
+		}
+
+		this.allEventLogs = [];
 	}
 
 	public getEventLogs(): ReadonlyArray<EventLog> {
