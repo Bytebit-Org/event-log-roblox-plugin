@@ -5,6 +5,7 @@ type Props = {
 	Height: UDim;
 	IsLoggingActive: boolean;
 
+	OnClearEventLogStoreButtonActivated: () => void;
 	OnStartLoggingButtonActivated: () => void;
 	OnStopLoggingButtonActivated: () => void;
 };
@@ -23,7 +24,7 @@ export class ListDisplayHeader extends Roact.Component<Readonly<Props>> {
 					VerticalAlignment={Enum.VerticalAlignment.Center}
 				/>
 				<StudioTextButton
-					Key="StartButton"
+					Key="ToggleListeningButton"
 					LayoutOrder={1}
 					Text={props.IsLoggingActive ? `🟥` : `▶️`}
 					Width={new UDim(0, StudioTextButton.HeightUDim.Offset)}
@@ -31,6 +32,15 @@ export class ListDisplayHeader extends Roact.Component<Readonly<Props>> {
 						MouseButton1Click: props.IsLoggingActive
 							? props.OnStopLoggingButtonActivated
 							: props.OnStartLoggingButtonActivated,
+					}}
+				></StudioTextButton>
+				<StudioTextButton
+					Key="ClearListButton"
+					LayoutOrder={2}
+					Text={`❌`}
+					Width={new UDim(0, StudioTextButton.HeightUDim.Offset)}
+					Events={{
+						MouseButton1Click: props.OnClearEventLogStoreButtonActivated,
 					}}
 				></StudioTextButton>
 			</frame>

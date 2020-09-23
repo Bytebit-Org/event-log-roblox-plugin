@@ -19,7 +19,7 @@ type State = {
 const displayRowLabelWidth = 64;
 const displayRowTextSize = 14;
 
-const argumentTypeLabelWidth = 48;
+const argumentTypeLabelWidth = 56;
 const argumentRowTextSize = 14;
 
 export class ListItem extends Roact.Component<Readonly<Props>, Readonly<State>> {

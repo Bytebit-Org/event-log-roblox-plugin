@@ -5,6 +5,7 @@ import { EventLog } from "types/EventLog";
 export interface IEventLogStore extends IDestroyable {
 	readonly eventLogAdded: IReadOnlySignal<(newEventLog: EventLog) => void>;
 
+	clear(): void;
 	getEventLogs(): ReadonlyArray<EventLog>;
 	recordEventLog(eventLog: EventLog): void;
 }

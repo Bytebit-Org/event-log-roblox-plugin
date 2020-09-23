@@ -13,12 +13,12 @@ export class ListDisplayController {
 	private eventLogAddedConnection?: RBXScriptConnection;
 
 	private constructor(
-		private readonly eventLogStoreFactory: EventLogStoreFactory,
+		eventLogStoreFactory: EventLogStoreFactory,
 		private readonly eventListenerFactory: EventListenerFactory,
 		private readonly localizedStringsManager: LocalizedStringsManager,
 		private readonly studioSettings: Studio,
 	) {
-		this.currentEventLogStore = this.eventLogStoreFactory.createInstance();
+		this.currentEventLogStore = eventLogStoreFactory.createInstance();
 
 		this.listenForNewEventLogsInStore();
 		this.listenForStudioThemeChanges();
@@ -47,10 +47,17 @@ export class ListDisplayController {
 				EventLogs={this.currentEventLogStore.getEventLogs()}
 				IsLoggingActive={this.currentEventListener !== undefined}
 				LocalizedStringsManager={this.localizedStringsManager}
+				OnClearEventLogStoreButtonActivated={() => this.handleClearEventLogStoreButtonActivated()}
 				OnStartLoggingButtonActivated={() => this.handleStartLoggingButtonActivated()}
 				OnStopLoggingButtonActivated={() => this.handleStopLoggingButtonActivated()}
 			/>
 		);
+	}
+
+	private handleClearEventLogStoreButtonActivated() {
+		this.currentEventLogStore.clear();
+
+		this.updateIfShowing();
 	}
 
 	private handleStartLoggingButtonActivated() {

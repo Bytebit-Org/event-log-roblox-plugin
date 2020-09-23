@@ -10,6 +10,7 @@ type Props = {
 	IsLoggingActive: boolean;
 	LocalizedStringsManager: LocalizedStringsManager;
 
+	OnClearEventLogStoreButtonActivated: () => void;
 	OnStartLoggingButtonActivated: () => void;
 	OnStopLoggingButtonActivated: () => void;
 };
@@ -37,6 +38,7 @@ export class ListDisplayView extends Roact.Component<Readonly<Props>> {
 					Key="ListDisplayHeader"
 					Height={new UDim(0, 24)}
 					IsLoggingActive={props.IsLoggingActive}
+					OnClearEventLogStoreButtonActivated={props.OnClearEventLogStoreButtonActivated}
 					OnStartLoggingButtonActivated={props.OnStartLoggingButtonActivated}
 					OnStopLoggingButtonActivated={props.OnStopLoggingButtonActivated}
 				/>
