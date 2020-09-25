@@ -67,11 +67,21 @@ export class ListDisplayController {
 			throw `Already listening`;
 		}
 
+		let printString = this.localizedStringsManager.GetLocalizedString("ListeningToEventsWithRoots", {});
+		let shouldPrintRoots = true;
 		const roots = this.selectionService.Get();
 		if (roots.isEmpty()) {
 			roots.push(game);
+			printString = this.localizedStringsManager.GetLocalizedString("ListeningToEventsInDataModel", {});
+			shouldPrintRoots = false;
 		}
 		this.currentEventListener = this.eventListenerFactory.createInstance(this.currentEventLogStore, roots);
+
+		const printPrefix = this.localizedStringsManager.GetLocalizedString("PrintPrefix", {});
+		print(printPrefix, printString);
+		if (shouldPrintRoots) {
+			roots.forEach((root) => print(printPrefix, `\t${root.GetFullName()}`));
+		}
 
 		this.updateIfShowing();
 	}

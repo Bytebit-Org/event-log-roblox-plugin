@@ -7,4 +7,7 @@ export type LocalizedStringKey =
 	| "TargetEnvironmentLabel"
 	| "ArgumentsSectionLabel"
 	| "ArgumentTypeHeader"
-	| "ArgumentValueHeader";
+	| "ArgumentValueHeader"
+	| "PrintPrefix"
+	| "ListeningToEventsWithRoots"
+	| "ListeningToEventsInDataModel";
