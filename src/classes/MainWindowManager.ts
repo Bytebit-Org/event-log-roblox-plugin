@@ -76,7 +76,7 @@ export class MainWindowManager {
 		}
 
 		this.pluginToolbarButton.Click.Connect(() => {
-			this.dockWidgetPluginGui.Enabled = true;
+			this.dockWidgetPluginGui.Enabled = !this.dockWidgetPluginGui.Enabled;
 		});
 	}
 
