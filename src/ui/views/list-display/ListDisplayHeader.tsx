@@ -35,12 +35,32 @@ export class ListDisplayHeader extends Roact.Component<Readonly<Props>> {
 					}}
 				></StudioTextButton>
 				<StudioTextButton
-					Key="ClearListButton"
+					Key="SearchButton" // Maybe this should be a textbox on a separate line, instead?
 					LayoutOrder={2}
+					Text={`🔍`}
+					Width={new UDim(0, StudioTextButton.HeightUDim.Offset)}
+					Visible={false}
+					Events={{
+						MouseButton1Click: () => {},
+					}}
+				></StudioTextButton>
+				<StudioTextButton
+					Key="ClearListButton"
+					LayoutOrder={3}
 					Text={`❌`}
 					Width={new UDim(0, StudioTextButton.HeightUDim.Offset)}
 					Events={{
 						MouseButton1Click: props.OnClearEventLogStoreButtonActivated,
+					}}
+				></StudioTextButton>
+				<StudioTextButton
+					Key="PluginInfoButton" // TODO: Display a pop-up with info about the plugin, such as how to contribute
+					LayoutOrder={4}
+					Text={`ℹ️`}
+					Width={new UDim(0, StudioTextButton.HeightUDim.Offset)}
+					Visible={false}
+					Events={{
+						MouseButton1Click: () => {},
 					}}
 				></StudioTextButton>
 			</frame>

@@ -16,6 +16,7 @@ export class ListDisplayController {
 		eventLogStoreFactory: EventLogStoreFactory,
 		private readonly eventListenerFactory: EventListenerFactory,
 		private readonly localizedStringsManager: LocalizedStringsManager,
+		private readonly selectionService: Selection,
 		private readonly studioSettings: Studio,
 	) {
 		this.currentEventLogStore = eventLogStoreFactory.createInstance();
@@ -29,6 +30,7 @@ export class ListDisplayController {
 			new EventLogStoreFactory(),
 			new EventListenerFactory(),
 			localizedStringsManager,
+			game.GetService("Selection"),
 			settings().Studio,
 		);
 	}
@@ -65,7 +67,11 @@ export class ListDisplayController {
 			throw `Already listening`;
 		}
 
-		this.currentEventListener = this.eventListenerFactory.createInstance(this.currentEventLogStore, [game]);
+		const roots = this.selectionService.Get();
+		if (roots.isEmpty()) {
+			roots.push(game);
+		}
+		this.currentEventListener = this.eventListenerFactory.createInstance(this.currentEventLogStore, roots);
 
 		this.updateIfShowing();
 	}
