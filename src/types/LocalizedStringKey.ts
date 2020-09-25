@@ -1,6 +1,7 @@
 export type LocalizedStringKey =
 	| "PluginToolbarText"
 	| "MainToolbarButtonText"
+	| "MainToolbarButtonTooltip"
 	| "BaseMainWindowTitle"
 	| "AncestryLabel"
 	| "SourceEnvironmentLabel"

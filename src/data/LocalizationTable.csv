@@ -1,6 +1,7 @@
 Key,Context,Example,Source
 PluginToolbarText,,,Event Log
 MainToolbarButtonText,,,Event Log
+MainToolbarButtonTooltip,,,Opens and closes the Event Log window
 BaseMainWindowTitle,,,Event Log
 AncestryLabel,,,Ancestry
 SourceEnvironmentLabel,,,Source Env

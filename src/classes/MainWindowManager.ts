@@ -1,4 +1,5 @@
 import { RunService } from "@rbxts/services";
+import { Constants } from "data/Constants";
 import { ListDisplayController } from "ui/controllers/ListDisplayController";
 import { LocalizedStringsManager } from "./LocalizedStringsManager";
 
@@ -29,8 +30,8 @@ export class MainWindowManager {
 		);
 		this.pluginToolbarButton = pluginToolbar.CreateButton(
 			this.localizedStringsManager.GetLocalizedString("MainToolbarButtonText", {}),
-			"",
-			"",
+			this.localizedStringsManager.GetLocalizedString("MainToolbarButtonTooltip", {}),
+			Constants.mainButtonIcon,
 		);
 
 		this.containerFrame.Parent = this.dockWidgetPluginGui;
