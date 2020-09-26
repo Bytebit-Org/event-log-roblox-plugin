@@ -1,4 +1,7 @@
+import { SettingsKeys } from "./SettingsKeys";
+
 export type LocalizedStringKey =
+	| SettingsKeys
 	| "PluginToolbarText"
 	| "MainToolbarButtonText"
 	| "MainToolbarButtonTooltip"
@@ -11,4 +14,5 @@ export type LocalizedStringKey =
 	| "ArgumentValueHeader"
 	| "PrintPrefix"
 	| "ListeningToEventsWithRoots"
-	| "ListeningToEventsInDataModel";
+	| "ListeningToEventsInDataModel"
+	| "SettingsMenuTitle";

@@ -1,12 +1,17 @@
+import { set } from "@rbxts/t";
 import { LocalizedStringsManager } from "classes/LocalizedStringsManager";
+import { SettingsManager } from "classes/SettingsManager";
+import { MainWindowManager } from "classes/WindowManagers/MainWindowManager";
+import { SettingsWindowManager } from "classes/WindowManagers/SettingsWindowManager";
 /// <reference types="@rbxts/types/plugin" />
-
-import { MainWindowManager } from "classes/MainWindowManager";
 
 export {};
 
 const localizedStringsManager = LocalizedStringsManager.create();
+const settingsManager = SettingsManager.create(plugin);
 
-const toolbar = plugin.CreateToolbar(localizedStringsManager.GetLocalizedString("PluginToolbarText", {}));
+const pluginToolbar = plugin.CreateToolbar(localizedStringsManager.GetLocalizedString("PluginToolbarText", {}));
 
-MainWindowManager.create(localizedStringsManager, plugin, toolbar);
+const settingsWindowManager = SettingsWindowManager.create(localizedStringsManager, plugin, settingsManager);
+
+MainWindowManager.create(localizedStringsManager, plugin, pluginToolbar, settingsManager, settingsWindowManager);

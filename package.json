@@ -33,8 +33,9 @@
     "@rbxts/dumpster": "^1.0.8",
     "@rbxts/inspect": "^1.0.1",
     "@rbxts/roact": "^1.3.0-ts.2",
-    "@rbxts/roact-studio-components": "0.0.2-2.togglablesection.19",
+    "@rbxts/roact-studio-components": "0.0.2-2.togglablesection.23",
     "@rbxts/services": "^1.1.0",
-    "@rbxts/signals-tooling": "^1.0.3"
+    "@rbxts/signals-tooling": "^1.0.3",
+    "@rbxts/t": "^1.3.5"
   }
 }

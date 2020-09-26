@@ -6,6 +6,7 @@ type Props = {
 	IsLoggingActive: boolean;
 
 	OnClearEventLogStoreButtonActivated: () => void;
+	OnSettingsMenuButtonActivated: () => void;
 	OnStartLoggingButtonActivated: () => void;
 	OnStopLoggingButtonActivated: () => void;
 };
@@ -54,8 +55,17 @@ export class ListDisplayHeader extends Roact.Component<Readonly<Props>> {
 					}}
 				></StudioTextButton>
 				<StudioTextButton
-					Key="PluginInfoButton" // TODO: Display a pop-up with info about the plugin, such as how to contribute
+					Key="SettingsMenuButton"
 					LayoutOrder={4}
+					Text={`⚙️`}
+					Width={new UDim(0, StudioTextButton.HeightUDim.Offset)}
+					Events={{
+						MouseButton1Click: props.OnSettingsMenuButtonActivated,
+					}}
+				></StudioTextButton>
+				<StudioTextButton
+					Key="PluginInfoButton" // TODO: Display a pop-up with info about the plugin, such as how to contribute
+					LayoutOrder={5}
 					Text={`ℹ️`}
 					Width={new UDim(0, StudioTextButton.HeightUDim.Offset)}
 					Visible={false}

@@ -1,5 +1,6 @@
 Key,Context,Example,Source
-PluginToolbarText,,,Event Log
+ShouldRunOnWindowOpen,,,Should run when window opens
+PluginToolbarText,,, 
 MainToolbarButtonText,,,Event Log
 MainToolbarButtonTooltip,,,Opens and closes the Event Log window
 BaseMainWindowTitle,,,Event Log
@@ -12,3 +13,4 @@ ArgumentValueHeader,,,Value
 PrintPrefix,,,[Event Log Plugin]
 ListeningToEventsWithRoots,,,Now listening to events using the following roots taken from current selection:
 ListeningToEventsInDataModel,,,Now listening to all events in the DataModel. You can also select roots to listen to by selecting instances in the Explorer.
+SettingsMenuTitle,,,Event Log Settings

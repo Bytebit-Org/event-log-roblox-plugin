@@ -1,10 +1,11 @@
 import { RunService } from "@rbxts/services";
+import { SettingsManager } from "classes/SettingsManager";
 import { Constants } from "data/Constants";
 import { ListDisplayController } from "ui/controllers/ListDisplayController";
-import { LocalizedStringsManager } from "./LocalizedStringsManager";
+import { LocalizedStringsManager } from "../LocalizedStringsManager";
+import { SettingsWindowManager } from "./SettingsWindowManager";
 
 export class MainWindowManager {
-	private readonly containerFrame: Frame;
 	private readonly dockWidgetPluginGui: DockWidgetPluginGui;
 	private readonly pluginToolbarButton: PluginToolbarButton;
 
@@ -15,7 +16,6 @@ export class MainWindowManager {
 		pluginToolbar: PluginToolbar,
 		private readonly runService: RunService,
 	) {
-		this.containerFrame = new Instance("Frame");
 		this.dockWidgetPluginGui = pluginReference.CreateDockWidgetPluginGui(
 			"EventLog_MainWindow",
 			new DockWidgetPluginGuiInfo(
@@ -34,17 +34,14 @@ export class MainWindowManager {
 			Constants.mainButtonIcon,
 		);
 
-		this.containerFrame.Parent = this.dockWidgetPluginGui;
-
 		this.dockWidgetPluginGui.Name = "EventLog_MainWindow";
 		this.dockWidgetPluginGui.Title = this.localizedStringsManager.GetLocalizedString("BaseMainWindowTitle", {});
 
 		this.pluginToolbarButton.Enabled = this.runService.IsRunning();
 
 		this.handleActiveStateOfPluginToolbarButton();
+		this.listenForWindowEnabledToToggle();
 		this.listenToPluginToolbarButtonClicks();
-
-		this.showListDisplay();
 	}
 
 	public static create(
@@ -52,9 +49,11 @@ export class MainWindowManager {
 		localizedStringsManager: LocalizedStringsManager,
 		pluginReference: Plugin,
 		pluginToolbar: PluginToolbar,
+		settingsManager: SettingsManager,
+		settingsWindowManager: SettingsWindowManager,
 	) {
 		return new MainWindowManager(
-			ListDisplayController.create(localizedStringsManager),
+			ListDisplayController.create(localizedStringsManager, settingsManager, settingsWindowManager),
 			localizedStringsManager,
 			pluginReference,
 			pluginToolbar,
@@ -70,6 +69,19 @@ export class MainWindowManager {
 			.Connect(() => this.pluginToolbarButton.SetActive(this.dockWidgetPluginGui.Enabled));
 	}
 
+	private listenForWindowEnabledToToggle() {
+		const onWindowEnableToggled = () => {
+			if (this.dockWidgetPluginGui.Enabled) {
+				this.listDisplayController.show(this.dockWidgetPluginGui);
+			} else {
+				this.listDisplayController.hide();
+			}
+		};
+
+		this.dockWidgetPluginGui.GetPropertyChangedSignal("Enabled").Connect(onWindowEnableToggled);
+		onWindowEnableToggled();
+	}
+
 	private listenToPluginToolbarButtonClicks() {
 		if (!this.runService.IsRunning()) {
 			return;
@@ -78,9 +90,5 @@ export class MainWindowManager {
 		this.pluginToolbarButton.Click.Connect(() => {
 			this.dockWidgetPluginGui.Enabled = !this.dockWidgetPluginGui.Enabled;
 		});
-	}
-
-	private showListDisplay() {
-		this.listDisplayController.show(this.dockWidgetPluginGui);
 	}
 }
